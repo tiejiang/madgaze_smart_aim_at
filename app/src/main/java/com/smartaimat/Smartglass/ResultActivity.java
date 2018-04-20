@@ -6,31 +6,34 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.intchip.media.SDLNative;
+import com.intchip.media.utils.Constant;
+import com.smartaimat.Smartglass.UDP.DistanceUDPRequire;
+
 import java.io.File;
 
 public class ResultActivity extends Activity {
 
-    private Button voice;
-    private Button takepic;
-    private Button facepic;
     private Button detect;
     private Button button;
     private ImageView imageView;
-    private TextView tv;
-    private static Handler handler;
-    private Context context = this;
+    private TextView mLaserMeasureDis;
     private WifiManager mWifiManager = null;
     public WifiAutoConnectManager mWifiAutoConnectManager;
     public StreamMadiaPlayer mStreamMadiaPlayer;
     public static ResultActivity mResActivityInstance;
     private static final File parentPath = Environment.getExternalStorageDirectory();
     private static   String storagePath = "";
+    private DistanceUDPRequire mDistanceUDPRequire;
+    private boolean isOnLine;
+    public static Handler mDataHandler;
     private static final String DST_FOLDER_NAME = "CameraPic";
 
 
@@ -47,24 +50,34 @@ public class ResultActivity extends Activity {
 //        mWifiAutoConnectManager.connect("121121121121121121121121121", "tiejiang2617**--okc", WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
         // mWifiAutoConnectManager.connect("a.intchip:56:61", "", WifiAutoConnectManager.WifiCipherType.WIFICIPHER_NOPASS);
 
-        imageView = (ImageView) findViewById(R.id.pic);
-        button = (Button) findViewById(R.id.btn_take_pic);
-        button.setOnClickListener(new View.OnClickListener() {
+        mLaserMeasureDis = (TextView)findViewById(R.id.laser_measure_dis);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SDLNative.snapshot(ResultActivity.initPath()+"temp.jpeg");
+////                Intent BTintent = new Intent(ResultActivity.this, ClientActivity.class);
+////                startActivity(BTintent);
+//            }
+//        });
+
+        mDistanceUDPRequire = new DistanceUDPRequire();
+        isOnLine = true;
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                SDLNative.snapshot(ResultActivity.initPath()+"temp.jpeg");
-//                Intent BTintent = new Intent(ResultActivity.this, ClientActivity.class);
-//                startActivity(BTintent);
+            public void run() {
+                while (isOnLine){
+                    try{
+                        mDistanceUDPRequire.distanceUDP();
+                        Thread.sleep(1000);
+//                        Log.d("TIEJIANG", "MainActivity---onCreate"+" get distance");
+                    }catch (InterruptedException i){
+                        i.printStackTrace();
+                        Log.d("TIEJIANG", "MainActivity---onCreate InterruptedException= "+i.getMessage());
+                    }
+                }
             }
-        });
-        detect = (Button) findViewById(R.id.detect);
-        detect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(ResultActivity.this, CameraActivity.class);
-//                startActivityForResult(intent, 0);
-            }
-        });
+        }).start();
+        handleData();
     }
 
     public static ResultActivity getResActivityInstance(){
@@ -87,7 +100,7 @@ public class ResultActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         mStreamMadiaPlayer.onDestory();
-//       isOnLine = false;
+       isOnLine = false;
     }
 
     @Override
@@ -112,6 +125,22 @@ public class ResultActivity extends Activity {
             }
         }
         return storagePath;
+    }
+
+    private void handleData(){
+
+        mDataHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case Constant.LASER_DISTANCE:
+                        String distance = (String)msg.obj;
+                        mLaserMeasureDis.setText(distance + "m");
+                        break;
+                }
+            }
+        };
     }
 }
 

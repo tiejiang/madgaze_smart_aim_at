@@ -29,25 +29,6 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mMainActivityInstance = this;
         mStreamMadiaPlayer = (StreamMadiaPlayer)findViewById(R.id.main_surface);
-//        mStreamMadiaPlayer = new StreamMadiaPlayer(this);
-//        mDistanceUDPRequire = new DistanceUDPRequire();
-//        isOnLine = true;
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (isOnLine){
-//                    try{
-//                        mDistanceUDPRequire.distanceUDP();
-//                        Thread.sleep(500);
-//                        Log.d("TIEJIANG", "MainActivity---onCreate"+" get distance");
-//                    }catch (InterruptedException i){
-//                        i.printStackTrace();
-//                        Log.d("TIEJIANG", "MainActivity---onCreate InterruptedException= "+i.getMessage());
-//                    }
-//                }
-//            }
-//        }).start();
-//        handleData();
     }
 
     public static MainActivity getMainActivityInstance(){
@@ -84,20 +65,4 @@ public class MainActivity extends Activity {
         super.onResume();
         mStreamMadiaPlayer.onResume();
     }
-
-//    private void handleData(){
-//
-//        mDataHandler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                switch (msg.what){
-//                    case Constant.LASER_DISTANCE:
-//                          String distance = (String)msg.obj;
-//                        mLaserMeasureDis.setText(distance);
-//                        break;
-//                }
-//            }
-//        };
-//    }
 }
