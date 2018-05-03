@@ -1,1 +1,1 @@
-include ':cameraLib', ':app'
+include ':cameraLib', ':app', ':faceDetect'

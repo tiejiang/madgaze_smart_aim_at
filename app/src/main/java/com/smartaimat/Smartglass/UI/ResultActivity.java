@@ -1,7 +1,8 @@
-package com.smartaimat.Smartglass;
+package com.smartaimat.Smartglass.UI;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,20 +14,24 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.intchip.media.SDLNative;
 import com.intchip.media.utils.Constant;
+import com.smartaimat.Smartglass.R;
+import com.smartaimat.Smartglass.StreamMadiaPlayer;
 import com.smartaimat.Smartglass.UDP.DistanceUDPRequire;
+import com.smartaimat.Smartglass.WifiAutoConnectManager;
 
 import java.io.File;
 
 public class ResultActivity extends Activity {
 
     private Button detect;
-    private Button button;
+    private Button exit;
     private ImageView imageView;
     private TextView mLaserMeasureDis;
-    private WifiManager mWifiManager = null;
-    public WifiAutoConnectManager mWifiAutoConnectManager;
+//    private WifiManager mWifiManager = null;
+//    public WifiAutoConnectManager mWifiAutoConnectManager;
     public StreamMadiaPlayer mStreamMadiaPlayer;
     public static ResultActivity mResActivityInstance;
     private static final File parentPath = Environment.getExternalStorageDirectory();
@@ -45,20 +50,19 @@ public class ResultActivity extends Activity {
         mResActivityInstance = this;
         mStreamMadiaPlayer = (StreamMadiaPlayer)findViewById(com.smartaimat.Smartglass.R.id.main_surface);
         initPath();
-        mWifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        mWifiAutoConnectManager = new WifiAutoConnectManager(mWifiManager);
+//        mWifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        mWifiAutoConnectManager = new WifiAutoConnectManager(mWifiManager);
 //        mWifiAutoConnectManager.connect("121121121121121121121121121", "tiejiang2617**--okc", WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
         // mWifiAutoConnectManager.connect("a.intchip:56:61", "", WifiAutoConnectManager.WifiCipherType.WIFICIPHER_NOPASS);
 
         mLaserMeasureDis = (TextView)findViewById(R.id.laser_measure_dis);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SDLNative.snapshot(ResultActivity.initPath()+"temp.jpeg");
-////                Intent BTintent = new Intent(ResultActivity.this, ClientActivity.class);
-////                startActivity(BTintent);
-//            }
-//        });
+        exit = (Button)findViewById(R.id.exit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mDistanceUDPRequire = new DistanceUDPRequire();
         isOnLine = true;
@@ -136,6 +140,7 @@ public class ResultActivity extends Activity {
                 switch (msg.what){
                     case Constant.LASER_DISTANCE:
                         String distance = (String)msg.obj;
+                        mLaserMeasureDis.setTextColor(Color.RED);
                         mLaserMeasureDis.setText(distance + "m");
                         break;
                 }

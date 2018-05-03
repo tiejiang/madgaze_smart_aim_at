@@ -10,7 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="logout"/>
 
         <com.smartaimat.Smartglass.StreamMadiaPlayer
             android:id="@+id/main_surface"
@@ -21,21 +25,18 @@
             android:layout_centerInParent="true"
             android:background="#00000000"/>
 
-        <!--<ImageView-->
-        <!--android:layout_width="30dp"-->
-        <!--android:layout_height="30dp"-->
-        <!--android:src="@drawable/aim_at"-->
-        <!--android:layout_marginTop="265dp"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--/>-->
         <TextView
             android:id="@+id/laser_measure_dis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/main_surface"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="72dp"
-            android:text="" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="33dp"
+            android:layout_marginEnd="74dp"
+            android:layout_marginRight="74dp"
+            android:textSize="30sp"
+            android:text=" " />
     </RelativeLayout>
 
 </FrameLayout>

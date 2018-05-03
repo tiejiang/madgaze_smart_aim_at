@@ -9,7 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import static com.smartaimat.Smartglass.ResultActivity.mDataHandler;
+import static com.smartaimat.Smartglass.UI.ResultActivity.mDataHandler;
 
 /**
  * Created by Administrator on 2018/1/12.
@@ -93,7 +93,7 @@ public class DistanceUDPRequire {
         String data = temp_string;
         String packageHead = data.substring(0,4);
         String packageTail = data.substring(50, 54);
-        String distance = data.substring(16,18);
+        String distance = data.substring(14,18);
         int realDistance = 0;
         double dis = 0;
         Log.d("TIEJIANG", "DistanceUDPRequire---analysisData"

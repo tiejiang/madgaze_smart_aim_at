@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cameraLib/cameraLib.iml" filepath="$PROJECT_DIR$/cameraLib/cameraLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/faceDetect/faceDetect.iml" filepath="$PROJECT_DIR$/faceDetect/faceDetect.iml" />
       <module fileurl="file://$PROJECT_DIR$/madgaze_smart_aim_at.iml" filepath="$PROJECT_DIR$/madgaze_smart_aim_at.iml" />
     </modules>
   </component>

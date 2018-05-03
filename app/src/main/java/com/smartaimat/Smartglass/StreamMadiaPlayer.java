@@ -18,6 +18,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.intchip.media.SDLNative;
+import com.smartaimat.Smartglass.UI.ResultActivity;
 
 public class StreamMadiaPlayer extends SurfaceView implements SurfaceHolder.Callback {
 
