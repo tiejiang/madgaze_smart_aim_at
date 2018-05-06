@@ -71,8 +71,8 @@ public class ResultActivity extends Activity {
             public void run() {
                 while (isOnLine){
                     try{
+                        Thread.sleep(3000);
                         mDistanceUDPRequire.distanceUDP();
-                        Thread.sleep(1000);
 //                        Log.d("TIEJIANG", "MainActivity---onCreate"+" get distance");
                     }catch (InterruptedException i){
                         i.printStackTrace();

@@ -47,7 +47,9 @@ public class DistanceUDPRequire {
             }
             String dis = analysisData(tempData);
             Log.d("TIEJIANG", "DistanceUDPRequire---distanceUDP receive data= "+tempData + " tempData lenght= "+ tempData.length());
-            mDataHandler.obtainMessage(Constant.LASER_DISTANCE, dis).sendToTarget();
+            if (!dis.equals("0.0")){
+                mDataHandler.obtainMessage(Constant.LASER_DISTANCE, dis).sendToTarget();
+            }
             socket.close();
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -100,7 +102,7 @@ public class DistanceUDPRequire {
                 +" packageHead= "+packageHead
                 +" packageTail= "+packageTail
                 +" distance = "+ distance);
-        if (packageHead.equals("AEA7") || packageTail.equals("BCBE")){
+        if (packageHead.equals("AEA7") && packageTail.equals("BCBE")){
             realDistance = Integer.parseInt(distance, 16);
             dis = realDistance / 10;
         }
