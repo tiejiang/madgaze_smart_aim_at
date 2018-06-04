@@ -42,11 +42,11 @@ public class DistanceUDPRequire {
             byte[] temp = backPacket.getData();
             String tempData = byteArrayToHexStr(temp);
             if (tempData == null){
-                Log.d("TIEJIANG", "DistanceUDPRequire---distanceUDP receive data= null"+"restart send start wifi command");
+//                Log.d("TIEJIANG", "DistanceUDPRequire---distanceUDP receive data= null"+"restart send start wifi command");
                 isWIFI702Start = false;
             }
             String dis = analysisData(tempData);
-            Log.d("TIEJIANG", "DistanceUDPRequire---distanceUDP receive data= "+tempData + " tempData lenght= "+ tempData.length());
+            Log.d("TIEJIANG", "DistanceUDPRequire---distanceUDP receive tempData= "+tempData + " tempData lenght= "+ tempData.length());
             if (!dis.equals("0.0")){
                 mDataHandler.obtainMessage(Constant.LASER_DISTANCE, dis).sendToTarget();
             }
@@ -102,9 +102,12 @@ public class DistanceUDPRequire {
                 +" packageHead= "+packageHead
                 +" packageTail= "+packageTail
                 +" distance = "+ distance);
-        if (packageHead.equals("AEA7") && packageTail.equals("BCBE")){
+        if (packageHead.equals("AEA7") && packageTail.equals("BCBE") || !distance.equals("0000")){
             realDistance = Integer.parseInt(distance, 16);
             dis = realDistance / 10;
+            int dec_dis = realDistance % 10;
+            Log.d("TIEJIANG", "DistanceUDPRequire---analysisData"+ " dis= "+dis+" dec_dis= "+String.valueOf(dec_dis));
+
         }
         return String.valueOf(dis);
     }
