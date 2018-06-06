@@ -36,7 +36,8 @@ public class DistanceUDPRequire {
 //            byte[] backbuf = new byte[1024];
             byte[] backbuf = new byte[28];
             DatagramPacket backPacket = new DatagramPacket(backbuf, backbuf.length);
-            socket.setSoTimeout(1000);
+//            socket.setSoTimeout(1000);
+            socket.setSoTimeout(500);
             socket.receive(backPacket);  //接收返回数据
 //            String backMsg = new String(backbuf, 0, backPacket.getLength());
             byte[] temp = backPacket.getData();
@@ -109,6 +110,10 @@ public class DistanceUDPRequire {
             Log.d("TIEJIANG", "DistanceUDPRequire---analysisData"+ " dis= "+dis+" dec_dis= "+String.valueOf(dec_dis));
 
         }
-        return String.valueOf(dis);
+        if (dis > 4000){ //出现4864错误值的情况发生
+            return "0.0";
+        }else {
+            return String.valueOf(dis);
+        }
     }
 }
