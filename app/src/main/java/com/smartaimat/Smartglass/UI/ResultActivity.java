@@ -1,9 +1,7 @@
 package com.smartaimat.Smartglass.UI;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,12 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.intchip.media.SDLNative;
 import com.intchip.media.utils.Constant;
 import com.smartaimat.Smartglass.R;
 import com.smartaimat.Smartglass.StreamMadiaPlayer;
 import com.smartaimat.Smartglass.UDP.DistanceUDPRequire;
-import com.smartaimat.Smartglass.WifiAutoConnectManager;
+import com.smartaimat.Smartglass.UDP.DistanceUDPRequireWeiRuiTechModule;
 
 import java.io.File;
 
@@ -37,6 +34,7 @@ public class ResultActivity extends Activity {
     private static final File parentPath = Environment.getExternalStorageDirectory();
     private static   String storagePath = "";
     private DistanceUDPRequire mDistanceUDPRequire;
+    private DistanceUDPRequireWeiRuiTechModule mDistanceUDPRequireWeiRuiTechModule;
     private boolean isOnLine;
     public static Handler mDataHandler;
     private static final String DST_FOLDER_NAME = "CameraPic";
@@ -64,7 +62,8 @@ public class ResultActivity extends Activity {
             }
         });
 
-        mDistanceUDPRequire = new DistanceUDPRequire();
+//        mDistanceUDPRequire = new DistanceUDPRequire();
+        mDistanceUDPRequireWeiRuiTechModule = new DistanceUDPRequireWeiRuiTechModule();
         isOnLine = true;
         new Thread(new Runnable() {
             @Override
@@ -72,8 +71,9 @@ public class ResultActivity extends Activity {
                 while (isOnLine){
                     try{
 //                        Thread.sleep(3000);
-                        Thread.sleep(1000);
-                        mDistanceUDPRequire.distanceUDP();
+                        Thread.sleep(500);
+//                        mDistanceUDPRequire.distanceUDP();
+                        mDistanceUDPRequireWeiRuiTechModule.distanceUDP();
 //                        Log.d("TIEJIANG", "MainActivity---onCreate"+" get distance");
                     }catch (InterruptedException i){
                         i.printStackTrace();
